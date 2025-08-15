@@ -68,7 +68,7 @@ Pod::Spec.new do |spec|
   # spec.platform     = :ios, "9"
 
   #  When using multiple platforms
-  spec.ios.deployment_target = "10.0"
+  spec.ios.deployment_target = "12.0"
   # spec.osx.deployment_target = "10.7"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
@@ -119,7 +119,7 @@ Pod::Spec.new do |spec|
 
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
-
+  spec.frameworks = "Foundation", "UIKit"
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
 
@@ -138,9 +138,15 @@ Pod::Spec.new do |spec|
   spec.dependency 'UMCCommon', '~> 7.1.1'
   spec.dependency 'UMCPush', '~> 3.2.4'
 
-  # spec.pod_target_xcconfig = {
-  #   'OTHER_LDFLAGS' => '-ObjC',
-  #   'VALID_ARCHS' => 'x86_64 arm64'
-  # }
+  spec.pod_target_xcconfig = {
+    'OTHER_LDFLAGS' => '-ObjC',
+    'VALID_ARCHS' => 'x86_64 arm64',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64', # 关键修复
+    'GCC_WARN_INHIBIT_ALL_WARNINGS' => 'YES'
+  }
+  
+  spec.user_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' # 关键修复
+  }
 
 end
